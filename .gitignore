@@ -1,0 +1,5 @@
+*.o
+*.a
+*.d
+bin/100matches
+bin/main
