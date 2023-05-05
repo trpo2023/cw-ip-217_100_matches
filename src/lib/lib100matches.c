@@ -1,5 +1,28 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+enum Errors {
+    er_not_number,
+    er_not_diapazon,
+    er_too_much,
+};
+
+int info(int error)
+{
+    switch (error) {
+    case er_not_number:
+        printf("Это не число!\nВведите число: ");
+        return 1;
+    case er_not_diapazon:
+        printf("Число не входит в диапазон от 1 до 10!\n");
+        return 2;
+    case er_too_much:
+        printf("Спичек осталось меньше, чем вы ввели!\n");
+        return 3;
+    }
+    return 0;
+}
 
 int start()
 {
