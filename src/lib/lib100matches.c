@@ -24,44 +24,81 @@ int info(int error)
     return 0;
 }
 
+int xod_bota(int* kucha)
+{
+    int bot;
+    printf("Ходит Бот!\n");
+    printf("Осталось спичек: %d\n", *kucha);
+    if (*kucha <= 10) {
+        bot = *kucha;
+        printf("Бот победил!\n");
+        *kucha = 0;
+        return 2;
+    } else {
+        bot = rand() % 10 + 1;
+    }
+    printf("Он взял: %d\n", bot);
+    *kucha -= bot;
+    return 0;
+}
+
+void digit_or_not(char* xod)
+{
+    while (isdigit(xod[0]) == 0 && isdigit(xod[1]) == 0) {
+        info(er_not_number);
+        scanf(" %c%c", &xod[0], &xod[1]);
+    }
+}
+
+int xod_playera(int* kucha)
+{
+    char xod[2];
+    int player;
+    printf("Ваш ход!\n");
+    printf("Осталось спичек: %d\n", *kucha);
+    printf("Сколько спичек вы берете: ");
+    scanf(" %c%c", &xod[0], &xod[1]);
+    digit_or_not(xod);
+    player = atoi(xod);
+    if (player >= 1 && player <= 10) {
+        if (*kucha >= player) {
+            *kucha -= player;
+            if (*kucha == 0) {
+                printf("Вы победили!\n");
+                return 1;
+            }
+            return xod_bota(kucha);
+        } else {
+            info(er_too_much);
+        }
+    } else {
+        info(er_not_diapazon);
+    }
+    return 0;
+}
+
 int start()
 {
-    int kucha = 100, player = 0, bot = 0;
-    int quit;
+    int kucha;
+    char quit;
     printf("Начинаем игру?\n1 - Да; 2 - Нет;\n");
-    scanf("%d", &quit);
-    if (quit == 2)
-        return 1;
-    if (quit == 1) {
-        while (kucha > 0) {
-            printf("Ваш ход!\n");
-            printf("Осталось спичек: %d\n", kucha);
-            printf("Сколько спичек вы берете: ");
-            scanf("%d", &player);
-            if (player >= 1 && player <= 10) {
-                if (kucha >= player) {
-                    kucha -= player;
-                    printf("Ходит Бот!\n");
-                    printf("Осталось спичек: %d\n", kucha);
-                    if (kucha <= 10) {
-                        bot = kucha;
-                    } else {
-                        bot = rand() % 10;
-                    }
-                    if (kucha != 0) {
-                        printf("Он взял: %d\n", bot);
-                        kucha -= bot;
-                        if (kucha == 0)
-                            printf("Бот победил!\n");
-                    } else {
-                        printf("Вы победили!\n");
-                    }
-                } else {
-                    printf("Спичек осталось меньше, чем вы ввели!\n");
-                }
-            } else {
-                printf("Не входит в диапазон от 1 до 10\n");
+    scanf("%c", &quit);
+    while (1) {
+        switch (quit) {
+        case '2':
+            return 1;
+        case '1':
+            kucha = 100;
+            while (kucha > 0) {
+                xod_playera(&kucha);
             }
+            printf("Начинаем игру?\n1 - Да; 2 - Нет;\n");
+            scanf("\n%c", &quit);
+            break;
+        default:
+            printf("Нет такого выбора!\nВаше действие: ");
+            scanf(" %c", &quit);
+            break;
         }
     }
     return 0;
