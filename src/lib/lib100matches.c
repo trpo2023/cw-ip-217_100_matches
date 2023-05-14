@@ -50,6 +50,23 @@ void digit_or_not(char* xod)
     }
 }
 
+int check_diapazon(int xod)
+{
+    if (xod >= 1 && xod <= 10) {
+        return 0;
+    }
+    return 1;
+}
+
+int check_kol_vo(int xod, int* kucha)
+{
+    if (*kucha >= xod) {
+        *kucha -= xod;
+        return 0;
+    }
+    return 1;
+}
+
 int xod_playera(int* kucha)
 {
     char xod[2];
@@ -60,21 +77,19 @@ int xod_playera(int* kucha)
     scanf(" %c%c", &xod[0], &xod[1]);
     digit_or_not(xod);
     player = atoi(xod);
-    if (player >= 1 && player <= 10) {
-        if (*kucha >= player) {
-            *kucha -= player;
-            if (*kucha == 0) {
-                printf("Вы победили!\n");
-                return 1;
-            }
-            return xod_bota(kucha);
-        } else {
-            info(er_too_much);
-        }
-    } else {
+    if (check_diapazon(player) == 1) {
         info(er_not_diapazon);
+        return 1;
     }
-    return 0;
+    if (check_kol_vo(player, kucha) == 1) {
+        info(er_too_much);
+        return 2;
+    }
+    if (*kucha == 0) {
+        printf("Вы победили!\n");
+        return 1;
+    }
+    return xod_bota(kucha);
 }
 
 int start()
