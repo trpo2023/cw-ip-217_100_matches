@@ -1,8 +1,7 @@
 #include <ctype.h>
+#include <lib100matches.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <lib100matches.h>
-
 
 enum Errors {
     er_not_number,
