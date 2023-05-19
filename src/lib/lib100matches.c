@@ -31,6 +31,7 @@ int xod_bota(int* kucha)
     printf("Осталось спичек: %d\n", *kucha);
     if (*kucha <= 10) {
         bot = *kucha;
+        printf("Он взял: %d\n", bot);
         printf("Бот победил!\n");
         *kucha = 0;
         return 2;
@@ -42,12 +43,12 @@ int xod_bota(int* kucha)
     return 0;
 }
 
-void digit_or_not(char* xod)
+int digit_or_not(char* xod)
 {
-    while (isdigit(xod[0]) == 0 && isdigit(xod[1]) == 0) {
-        info(er_not_number);
-        scanf(" %c%c", &xod[0], &xod[1]);
+    if (isdigit(xod[0]) == 0 && isdigit(xod[1]) == 0) {
+        return 1;
     }
+    return 0;
 }
 
 int check_diapazon(int xod)
@@ -67,15 +68,16 @@ int check_kol_vo(int xod, int* kucha)
     return 1;
 }
 
-int xod_playera(int* kucha)
+int checks(int* kucha, char* xod)
 {
-    char xod[2];
+    int ret_dig = digit_or_not(xod);
+    while (ret_dig != 0) {
+        info(er_not_number);
+        fflush(stdin);
+        scanf(" %c%c", &xod[0], &xod[1]);
+        ret_dig = digit_or_not(xod);
+    }
     int player;
-    printf("Ваш ход!\n");
-    printf("Осталось спичек: %d\n", *kucha);
-    printf("Сколько спичек вы берете: ");
-    scanf(" %c%c", &xod[0], &xod[1]);
-    digit_or_not(xod);
     player = atoi(xod);
     if (check_diapazon(player) == 1) {
         info(er_not_diapazon);
@@ -90,6 +92,18 @@ int xod_playera(int* kucha)
         return 1;
     }
     return xod_bota(kucha);
+}
+
+int xod_playera(int* kucha)
+{
+    fflush(stdin);
+    char xod[2];
+    printf("Ваш ход!\n");
+    printf("Осталось спичек: %d\n", *kucha);
+    printf("Сколько спичек вы берете: ");
+    scanf(" %c%c", &xod[0], &xod[1]);
+    checks(kucha, xod);
+    return 0;
 }
 
 int start()
