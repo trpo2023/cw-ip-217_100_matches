@@ -8,6 +8,7 @@ CPPFLAGST = -I thirdparty -MP -MMD
 
 APP_NAME = 100matches
 LIB_NAME = lib
+TEST_NAME = test100matches
 
 OBJ_DIR = obj
 SRC_DIR = src
@@ -15,7 +16,7 @@ BIN_DIR = bin
 TEST_DIR = test
 
 APP_PATH = $(BIN_DIR)/$(APP_NAME)
-LIB_PATH = $(OBJ_DIR)/$(SRC_DIR)/$(LIB_NAME)/$(LIB_NAME).a
+TEST_PATH = $(BIN_DIR)/$(TEST_NAME)
 LIB_PATH = $(OBJ_DIR)/$(SRC_DIR)/$(LIB_NAME)/$(LIB_NAME).a
 
 APP_SOURCES = $(shell find $(SRC_DIR)/$(APP_NAME) -name '*.$(SRC_EXT)')
