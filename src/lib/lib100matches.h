@@ -7,6 +7,8 @@ enum Errors;
 int info(int error);
 
 int start();
+int winner(int* kucha, int queue);
+void queue(int* kucha);
 int xod_bota(int* kucha);
 int digit_or_not(char* xod);
 int check_diapazon(int xod);
