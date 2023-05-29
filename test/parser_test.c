@@ -33,3 +33,19 @@ CTEST(digit_or_not, check_digit_or_not)
     int res = digit_or_not(xod);
     ASSERT_EQUAL(expect, res);
 }
+CTEST(kol_vo, check_kol_vo)
+{
+    int kucha = 15;
+    int xod = 9;
+    const int expect = 0;
+    int res = check_kol_vo(xod, &kucha);
+    ASSERT_EQUAL(expect, res);
+}
+CTEST(bad_kol_vo, check_bad_kol_vo)
+{
+    int kucha = 8;
+    int xod = 9;
+    const int expect = 1;
+    int res = check_kol_vo(xod, &kucha);
+    ASSERT_EQUAL(expect, res);
+}
